@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import logging
 import pandas as pd
 import PyPDF2
@@ -287,30 +288,43 @@ def process_pdf(file_path):
                 logging.warning(f"Page {i+1} has no extractable text, skipping.")
                 continue
 
-            try:
-                response = client.models.generate_content(
-                    model=MODEL_NAME,
-                    contents=f"{GEMINI_PROMPT}\n\nPAGE TEXT:\n{page_text}",
-                    config=types.GenerateContentConfig(
-                        temperature=0.0,
-                        response_mime_type="application/json",
-                    ),
-                )
-                parsed = json.loads(response.text)
-                cases = parsed.get("cases", [])
-                if not isinstance(cases, list):
-                    cases = [cases]
+            for attempt in range(1, 5):
+                try:
+                    response = client.models.generate_content(
+                        model=MODEL_NAME,
+                        contents=f"{GEMINI_PROMPT}\n\nPAGE TEXT:\n{page_text}",
+                        config=types.GenerateContentConfig(
+                            temperature=0.0,
+                            response_mime_type="application/json",
+                        ),
+                    )
+                    parsed = json.loads(response.text)
+                    cases = parsed.get("cases", [])
+                    if not isinstance(cases, list):
+                        cases = [cases]
 
-                all_rows.extend(cases)
-                print(f"{len(cases)} records extracted.")
-                logging.info(f"Page {i+1}: {len(cases)} records extracted.")
+                    all_rows.extend(cases)
+                    print(f"{len(cases)} records extracted.")
+                    logging.info(f"Page {i+1}: {len(cases)} records extracted.")
+                    break
 
-            except json.JSONDecodeError as e:
-                print("JSON parse error.")
-                logging.error(f"JSON parse error on page {i+1}: {e}\nRaw: {response.text[:300]}")
-            except Exception as e:
-                print(f"API error: {e}")
-                logging.error(f"Gemini API error on page {i+1}: {e}")
+                except json.JSONDecodeError as e:
+                    print("JSON parse error.")
+                    logging.error(f"JSON parse error on page {i+1}: {e}\nRaw: {response.text[:300]}")
+                    break
+                except Exception as e:
+                    err_str = str(e)
+                    if "503" in err_str or "UNAVAILABLE" in err_str or "429" in err_str:
+                        wait = 10 * attempt
+                        print(f"API busy (attempt {attempt}/4), retrying in {wait}s...")
+                        time.sleep(wait)
+                    else:
+                        print(f"API error: {e}")
+                        logging.error(f"Gemini API error on page {i+1}: {e}")
+                        break
+            else:
+                print("Failed after 4 attempts, skipping page.")
+                logging.error(f"Page {i+1} failed after 4 retries.")
 
     except Exception as e:
         print(f"  ERROR opening PDF: {e}")

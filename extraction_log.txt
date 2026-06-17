@@ -1,0 +1,41 @@
+2026-06-17 17:32:27,751 - INFO - Processing 112.97 KB_Causelist 06.05.2026.pdf - 4 pages
+2026-06-17 17:32:27,851 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:32:34,537 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-17 17:32:34,544 - INFO - Page 1: 0 records extracted.
+2026-06-17 17:32:34,660 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:06,775 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:06,777 - ERROR - Gemini API error on page 2: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:06,880 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:09,588 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:09,589 - ERROR - Gemini API error on page 3: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:09,636 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:14,997 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:14,999 - ERROR - Gemini API error on page 4: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:15,019 - INFO - Processing 114.21 KB_06-05-2026 Final IND Cause List.pdf - 7 pages
+2026-06-17 17:33:15,111 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:35,936 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:35,938 - ERROR - Gemini API error on page 1: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:36,041 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:38,086 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:38,087 - ERROR - Gemini API error on page 2: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:38,192 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:40,233 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:40,235 - ERROR - Gemini API error on page 3: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:40,347 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:44,830 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:44,831 - ERROR - Gemini API error on page 4: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:44,955 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:33:46,407 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:33:46,409 - ERROR - Gemini API error on page 5: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:33:46,559 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:34:12,491 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:34:12,492 - ERROR - Gemini API error on page 6: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:34:12,647 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:34:20,808 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-17 17:34:20,809 - ERROR - Gemini API error on page 7: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-17 17:34:20,835 - INFO - Processing 125.42 KB_Supplementary List 05.05.2026.pdf - 1 pages
+2026-06-17 17:34:20,902 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-17 17:34:47,024 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-17 17:34:47,035 - INFO - Page 1: 2 records extracted.
+2026-06-17 17:34:47,087 - INFO - Processing 181.26 KB_court VI cause list 06.05.2026.pdf - 6 pages
+2026-06-17 17:34:47,179 - INFO - AFC is enabled with max remote calls: 10.

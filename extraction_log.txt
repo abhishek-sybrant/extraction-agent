@@ -35,3 +35,25 @@
 2026-06-17 18:36:39,682 - INFO - 306.11 KB_Order dated 04.05.2026 regarding Constitution of Special Single Bench at NCLT Kochi Bench- For Pronouncement .pdf: 6 records.
 2026-06-17 18:36:42,096 - INFO - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/suui19ztlprj "HTTP/1.1 200 OK"
 2026-06-17 18:36:42,575 - INFO - Export complete: 77 records -> nclt_cause_list.xlsx
+2026-06-18 12:37:19,212 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-06-18 12:37:21,629 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJ5rDhFyoiO43UAgyMpUYkHY7EVor_JrfxTtaoZ24TuiBuJwYe5ZH-NcZGvyD_LaqEUz8ChPyvEe3oO8utKnPQWUpYpQxV_PZ2F41lJDrN1Kpn8&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-06-18 12:37:21,632 - INFO - Uploaded 112.97 KB_Causelist 06.05.2026.pdf -> files/bkkru0n4j0yn
+2026-06-18 12:37:21,632 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-18 12:38:26,734 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-18 12:38:26,746 - INFO - 112.97 KB_Causelist 06.05.2026.pdf: 15 records.
+2026-06-18 12:38:28,658 - INFO - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/bkkru0n4j0yn "HTTP/1.1 200 OK"
+2026-06-18 12:38:29,491 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-06-18 12:38:33,001 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJ5rDhHhoqkOTNSPkKLaJ9brgnNaUglrtnSG_1QXgBw54CbN-IhKPHjyXBoTg6BznzycBPo1n0WTB-hDxCJ7iPEIzj2Xt3QVs57G5JoFAF-mwg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-06-18 12:38:33,002 - INFO - Uploaded 114.21 KB_06-05-2026 Final IND Cause List.pdf -> files/3bupp6nwrnbt
+2026-06-18 12:38:33,003 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-18 12:41:18,282 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-18 12:41:18,285 - INFO - 114.21 KB_06-05-2026 Final IND Cause List.pdf: 56 records.
+2026-06-18 12:41:20,315 - INFO - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/3bupp6nwrnbt "HTTP/1.1 200 OK"
+2026-06-18 12:41:21,015 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-06-18 12:41:23,232 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJ5rDhEvJ7mgFYCcqAQ379gVBXXNGFXRZZ2dVmeun6Rzkt78JD8bYx5tffnL8DIqY7DMNFuOorOwFK2m_6iz20VTLrC_kTZQ5NHjwPK3KOtM_Wk&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-06-18 12:41:23,233 - INFO - Uploaded 306.11 KB_Order dated 04.05.2026 regarding Constitution of Special Single Bench at NCLT Kochi Bench- For Pronouncement .pdf -> files/jmzxtnve55bh
+2026-06-18 12:41:23,234 - INFO - AFC is enabled with max remote calls: 10.
+2026-06-18 12:41:47,890 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-18 12:41:47,891 - INFO - 306.11 KB_Order dated 04.05.2026 regarding Constitution of Special Single Bench at NCLT Kochi Bench- For Pronouncement .pdf: 6 records.
+2026-06-18 12:41:49,746 - INFO - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/jmzxtnve55bh "HTTP/1.1 200 OK"
+2026-06-18 12:41:49,950 - INFO - Export complete: 77 records -> nclt_cause_list.xlsx

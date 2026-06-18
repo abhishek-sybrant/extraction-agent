@@ -37,32 +37,39 @@ Return structured JSON only. No markdown. No explanations.
 DOCUMENT STRUCTURE — READ CAREFULLY
 ==================================================
 
-Each page may contain entries from one or more LIST SECTIONS:
-  SUPPLEMENTARY
-  PRIORITY (NO ADJOURNMENT)
-  ORDINARY
-  ADMISSION
+The PDF table has these columns (order may vary by bench):
+  SR No | CP No | CA/IA No | Purpose | Section/Rule | Name of Parties | Counsel columns... | Remarks
 
-Each list section contains MAIN MATTER BLOCKS. A main matter block looks like:
+Each page may contain entries from one or more LIST SECTIONS (headings):
+  PRONOUNCEMENT LIST
+  SUPPLEMENTARY LIST
+  PRIORITY LIST (NO ADJOURNMENT)
+  ORDINARY LIST
+  ADMISSION LIST
+  CLARIFICATION LIST
+  Any other named section heading
 
-  <SR_NO>  <CP_NO>
-            IBC Current Stage: <IBC_STAGE>
-            <SECTION/RULE>    <PURPOSE>    <NAME_OF_PARTIES>    <COUNSEL...>    <REMARKS>
-            <IA/CA_NO>        <SECTION/RULE>    <PURPOSE>    <NAME_OF_PARTIES>    ...
+Within each section, entries are structured as MAIN MATTER BLOCKS:
 
-Rules:
-- SR_NO appears only on the FIRST line of the block (with the CP_NO).
-- One CP_NO can have ZERO or MULTIPLE IA/CA rows beneath it.
-- If a CP has no CA/IA, output one record with ca_ia_no = "".
-- If a CP has multiple CA/IA entries, output ONE record per CA/IA, repeating the CP details.
-- A CP row itself (without a CA/IA) is also a valid record — include it with ca_ia_no = "".
+PATTERN A — CP row with IAs below (Guwahati / Kolkata style):
+  <SR_NO>  <CP_NO>   "Main Case" / "Main Matter"   <STATUS_OR_PURPOSE>   <SECTION>   <PARTIES>
+                      <IA_NO>                        <PURPOSE>             <SECTION>   <PARTIES>
+                      <IA_NO>                        <PURPOSE>             <SECTION>   <PARTIES>
+
+PATTERN B — Parent Matter row (unlisted) with IA rows having SR Nos (Indore style):
+  [blank]  <CP_NO>   "Main Matter"   <STATUS_NOTE>   <SECTION>   <PARTIES>
+  <SR_NO>  [blank]   <IA_NO_with_"in CP..." context>   <PURPOSE>   <SECTION>   <PARTIES>
+  <SR_NO>  [blank]   <IA_NO_with_"in CP..." context>   <PURPOSE>   <SECTION>   <PARTIES>
+
+PATTERN C — IA listed independently (Kochi / special bench style):
+  <SR_NO>  <CP_NO>   <IA_NO>   <PURPOSE>   <SECTION>   <PARTIES>
 
 ==================================================
 GLOBAL FIELDS (extract once, apply to ALL records)
 ==================================================
 
-bench:    From document header. E.g.: KOLKATA BENCH, MUMBAI BENCH, NEW DELHI BENCH
-court:    From document header. E.g.: Court-I, Court-II, Court No - II
+bench:           From document header. E.g.: GUWAHATI BENCH, INDORE BENCH, KOCHI BENCH
+court:           From document header. E.g.: COURT -I, COURT NO. 1, COURT -II
 cause_list_date: Hearing date from header. E.g.: 06.05.2026
 
 ==================================================
@@ -78,10 +85,9 @@ OUTPUT FORMAT
       "list_type": "",
       "sr_no": "",
       "cp_no": "",
-      "ibc_stage": "",
       "ca_ia_no": "",
-      "section_rule": "",
       "purpose": "",
+      "section_rule": "",
       "name_of_parties": "",
       "applicant_name": "",
       "respondent_name": "",
@@ -94,38 +100,77 @@ OUTPUT FORMAT
 FIELD RULES
 ==================================================
 
-list_type:  Section heading for this entry. Values: SUPPLEMENTARY | PRIORITY | ORDINARY | ADMISSION. Carry forward until a new heading appears.
+list_type:
+  The current section heading. Carry forward until a new heading appears.
+  Examples: PRONOUNCEMENT LIST, SUPPLEMENTARY LIST, ORDINARY LIST, ADMISSION LIST, CLARIFICATION LIST
+  Use the exact heading text from the PDF.
 
-sr_no:  Serial number at start of main matter block. E.g.: 1, 2, 101, 201. Blank for sub-IA rows without their own number.
+sr_no:
+  The serial number printed in the SR No column.
+  - For CP main matter rows that have a printed SR No: use it.
+  - For CP/Main Matter parent rows with NO printed SR No: leave blank.
+  - For IA rows: use the SR No if one is printed (Indore style), otherwise leave blank.
 
-cp_no:  Main case number. Strip IBC stage text and dates in parentheses. E.g.: C.P. (IB)/68(KB)2024, TP/38(KB)2026. Carry forward for CA/IA rows that don't restate it.
+cp_no:
+  The main case number from the CP No column.
+  - Use the exact value printed in the CP No column for that row.
+  - For IA rows in Guwahati/Kolkata style: leave blank (CP is already captured in the parent row).
+  - For IA rows in Indore style: leave blank (parent CP is encoded in ca_ia_no as "IA/xxx in CP/xxx").
+  - Do NOT carry forward the CP No to IA sub-rows.
+  - Keep complex case numbers as-is: e.g., "TP 58 of 2019 [CP(IB) 131 of 2018]", "Co.Appeal/3(MP)2024".
 
-ibc_stage:  "IBC Current Stage:" value below CP_NO. E.g.: Admitted, Liquidation Approved, Pending Admission, Resolution Plan Approved. Blank if absent.
+ca_ia_no:
+  - For CP main matter rows: use the descriptor from the CA/IA column as printed.
+    E.g.: "Main Case", "Main Matter", "Main Case (Final Motion)", "Main Case (1st Motion)", "MAIN CASE"
+  - For IA/CA sub-rows: use the full IA/CA number as printed, including any "in CP/..." or "in IA/..." context.
+    E.g.: "IA(IBC)/59/GB/2025", "IA/266(MP)2026 in CP(IB)/26(MP)2024", "IA(C/ACT)/110/KOB/2025"
+  - Do NOT strip the "in CP/..." context — it is important for tracing the parent case.
+  - Strip only parenthetical dates like "(dtd. 01.01.2025)" if they appear.
 
-ca_ia_no:  Linked application number on sub-rows. E.g.: IA(I.B.C)/593(KB)2026, IA (LIQ.) PROGRESS REPORT/126(KB)2025. Strip any date in parentheses. Blank if none.
+purpose:
+  The content of the Purpose column for that specific row.
+  - For CP main matter rows: this may be a hearing purpose ("For Clarification", "For Pronouncement")
+    OR a status/admission note ("Admitted 16-10-2024", "Main Matter Listed on 23-06-2026",
+    "Admitted vide order dated 28.10.2022, Liquidation vide order 13.10.2023",
+    "Remitted Back from NCLAT vide Order dated 25.08.2025 For Further").
+    Use whatever text is in the Purpose column verbatim — do NOT clean or shorten.
+  - For IA rows: hearing purpose like "For Further Consideration", "For Hearing", "New Application",
+    "For Pronouncement", "FOR PRONOUNCEMENT OF ORDERS".
+  - Never put counsel names or bar numbers in this field.
 
-section_rule:  Full legal section/rule text for this row. E.g.: IBC under Sec 7, Section 60(5)/Rule 11, Reg. 15 of IBBI (Liq.) Regulation 2016. Keep complete wording.
+section_rule:
+  The Section/Rule column value for that row.
+  Use exactly as printed — short forms are valid: "7 IBC", "9 IBC", "252(1)", "Rule 11",
+  "U/s 7 of IBC, 2016", "60(5) r.w. Rule 11", "Sec 12A r.w Reg 30A", "U/R 32, R/W RULE 11 NCLT".
 
-purpose:  Exact hearing purpose. E.g.: Admission, Further Consideration, For Arguments, Reserved for Order. No counsel names.
+name_of_parties:
+  Full party string from the Name of Parties column, using VS/V/S/Versus as separator.
+  E.g.: "Indian Bank (FC) Vs Prokash Datta (PG) to M/s Cleanopolis Energy Systems India Private. Limited."
+  If a single party (no VS), use that party name for both name_of_parties and applicant_name.
+  Do NOT include counsel names.
 
-name_of_parties:  Full party title using VS as separator. E.g.: STATE BANK OF INDIA VS SURATGARH BIKANER TOLL ROAD COMPANY PRIVATE LIMITED. If single party, use as both name_of_parties and applicant_name.
+applicant_name:
+  Party BEFORE the VS / V/S / Versus / V/s separator in name_of_parties.
 
-applicant_name:  Party BEFORE the VS/V/S/Versus separator.
+respondent_name:
+  Party AFTER the VS / V/S / Versus / V/s separator in name_of_parties. Blank if none.
 
-respondent_name:  Party AFTER the VS/V/S/Versus separator. Blank if none.
-
-remarks:  Actual remarks from the Remarks column only. E.g.: RP Appointed, Liq Allowed, Reserved for Order. Blank if cell is "-" or empty. No counsel names, bar numbers, timings.
+remarks:
+  Actual value from the Remarks column only.
+  Examples: "Ex-Party 28-08-2025", "RP Appointed", "Liq Allowed".
+  Blank if the cell is "-", empty, or absent.
+  Never include counsel names, bar numbers, IRP/RP/Liquidator names, or hearing times.
 
 ==================================================
 IGNORE COMPLETELY
 ==================================================
 
-- Counsel names and bar registration numbers (F/360/274/94, WB/568/2000, etc.)
-- IRP / RP / Liquidator / MP names
+- Counsel names and bar/enrollment numbers (e.g., F/360/274/94, WB/568/2000)
+- Names of IRP / RP / Liquidator / MP / Monitoring Committee members (unless they are a party)
 - CORAM / bench member names
 - Webex / VC / attendance instructions
 - Page numbers, footnotes, email addresses, hearing times
-- Registry notes
+- Registry notes and administrative text
 - "Cases filed in NCLAT against NCLT"
 - "PETITIONER IN PERSON (NA)"
 
@@ -133,11 +178,14 @@ IGNORE COMPLETELY
 QUALITY RULES
 ==================================================
 
-1. Every record must have cp_no and name_of_parties.
-2. Split applicant_name and respondent_name correctly from name_of_parties.
-3. Remove exact duplicate records.
-4. Return only valid JSON — no trailing commas, no comments.
-5. Do not omit any case entry.
+1. Output ONE record per row in the PDF table (both CP rows and IA rows).
+2. Every record must have name_of_parties populated.
+3. CP main matter rows must have cp_no populated; ca_ia_no should be the descriptor ("Main Case", "Main Matter", etc.).
+4. IA sub-rows must have ca_ia_no populated; cp_no should be blank.
+5. Split applicant_name and respondent_name correctly from name_of_parties on the VS separator.
+6. Do not merge or skip any rows.
+7. Do not duplicate records.
+8. Return only valid JSON — no trailing commas, no comments.
 """
 
 # ==========================================
@@ -256,18 +304,17 @@ def main():
     column_map = {
         "sr_no":           "SR No",
         "cp_no":           "CP No",
-        "ibc_stage":       "IBC Stage",
         "ca_ia_no":        "CA/IA No",
-        "section_rule":    "Section/Rule",
-        "purpose":         "Purpose",
+        "purpose":         "Case Purpose",
+        "section_rule":    "Section",
         "name_of_parties": "Name of Parties",
+        "remarks":         "Remarks",
+        "cause_list_date": "Date of Cause List",
+        "bench":           "BENCH",
+        "court":           "COURT",
         "applicant_name":  "Applicant Name",
         "respondent_name": "Respondent Name",
-        "remarks":         "Remarks",
         "list_type":       "List Type",
-        "cause_list_date": "Cause List Date",
-        "bench":           "Bench",
-        "court":           "Court",
     }
 
     for key in column_map:

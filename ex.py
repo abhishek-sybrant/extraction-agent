@@ -17,7 +17,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-api_key = "AQ.Ab8RN6IAAcxfc6ybikO4QtDjdb9OhxCVRvpNX5ovLFChNpf2lA"
+api_key = ""
 client = genai.Client(api_key=api_key)
 
 # ==========================================
